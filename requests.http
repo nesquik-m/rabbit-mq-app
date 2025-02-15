@@ -39,3 +39,15 @@ Content-Type: application/json
   "username": "User 4",
   "message": "Some message 4"
 }
+
+###
+
+# FANOUT
+
+POST http://localhost:8080/send/our.fanout.exchange
+Content-Type: application/json
+
+{
+  "username": "User 5",
+  "message": "Fanout message"
+}

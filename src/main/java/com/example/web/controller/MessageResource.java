@@ -22,4 +22,11 @@ public class MessageResource {
         return String.format("Message sent to exchange %s with key %s", exchange, key);
     }
 
+    @PostMapping("/send/{exchange}")
+    public String sendFanoutMessage(@PathVariable String exchange,
+                                    @RequestBody UserMessage userMessage) {
+        rabbitTemplate.convertAndSend(exchange, "", userMessage);
+        return String.format("Message sent to fanout exchange %s", exchange);
+    }
+
 }
