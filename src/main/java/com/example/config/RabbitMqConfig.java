@@ -94,4 +94,32 @@ public class RabbitMqConfig {
          */
     }
 
+    // FANOUT - широковещательный формат
+
+    @Bean
+    FanoutExchange fanoutExchange() {
+        return new FanoutExchange("our.fanout.exchange");
+    }
+
+    @Bean
+    Binding firstQueueToOurFanoutExchangeBinding() {
+        return BindingBuilder
+                .bind(firstQueue())
+                .to(fanoutExchange());
+    }
+
+    @Bean
+    Binding secondQueueToOurFanoutExchangeBinding() {
+        return BindingBuilder
+                .bind(secondQueue())
+                .to(fanoutExchange());
+    }
+
+    @Bean
+    Binding thirdQueueToOurFanoutExchangeBinding() {
+        return BindingBuilder
+                .bind(thirdQueue())
+                .to(fanoutExchange());
+    }
+
 }
