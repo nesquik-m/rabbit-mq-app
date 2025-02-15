@@ -1,0 +1,27 @@
+POST http://localhost:8080/send/our.direct.exchange/first.queue
+Content-Type: application/json
+
+{
+  "username": "User 1",
+  "message": "Some message 1"
+}
+
+###
+
+POST http://localhost:8080/send/our.direct.exchange/second.queue
+Content-Type: application/json
+
+{
+"username": "User 2",
+"message": "Some message 2"
+}
+
+###
+
+POST http://localhost:8080/send/our.direct.exchange/third.queue
+Content-Type: application/json
+
+{
+  "username": "User 3",
+  "message": "Some message 3"
+}
