@@ -1,3 +1,5 @@
+# DIRECT
+
 POST http://localhost:8080/send/our.direct.exchange/first.queue
 Content-Type: application/json
 
@@ -24,4 +26,16 @@ Content-Type: application/json
 {
   "username": "User 3",
   "message": "Some message 3"
+}
+
+###
+
+# TOPIC
+
+POST http://localhost:8080/send/our.topic.exchange/first.sfsfsf.queue
+Content-Type: application/json
+
+{
+  "username": "User 4",
+  "message": "Some message 4"
 }

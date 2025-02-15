@@ -2,10 +2,7 @@ package com.example.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.DirectExchange;
-import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
@@ -36,7 +33,7 @@ public class RabbitMqConfig {
         return new Queue("third.queue", false);
     }
 
-    // DIRECT
+    // DIRECT - индивидуальная доставка
 
     @Bean
     DirectExchange directExchange() {
@@ -65,6 +62,36 @@ public class RabbitMqConfig {
                 .bind(thirdQueue())
                 .to(directExchange())
                 .with("third.queue");
+    }
+
+    // TOPIC - индивидуальная доставка
+
+    @Bean
+    TopicExchange topicExchange() {
+        return new TopicExchange("our.topic.exchange");
+    }
+
+    @Bean
+    Binding firstQueueToOurTopicExchangeBinding() {
+        return BindingBuilder
+                .bind(firstQueue())
+                .to(topicExchange())
+                .with("first.*.queue");
+        /* .with поддерживает использование шаблонных символов:
+            1) # - routingKey содержит любое количество сегментов, и заканчивается на [.queue]
+                .with("#.queue");
+                    aaa.queue
+                    aaa.bbb.queue
+                    aaa.bbb.ccc.queue
+                .with("third.#.queue");
+                    third.aaa.queue
+                    third.aaa.bbb.queue
+            2) * - routingKey содержит 1 сегмент, и заканчивается на [.queue]
+                .with("*.queue");
+                    aaa.queue
+                .with("third.*.queue");
+                    third.aaa.queue
+         */
     }
 
 }
